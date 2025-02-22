@@ -1,7 +1,5 @@
 # Mini-Library of functions useful for Machine Learning Applications
-
 ## Implementation of the micrograd engine
-
 The underlying processor or the computer itself doesn't have an explicit understanding of what differentiation is. 
 The Backpropagation Algorithm being of extreme importance to training neural networks, relies on differentiation to perform gradient descent.
 Understanding it mathematically allows one to cleverly define implicit methods to allow the machine to perform differentiation.
@@ -26,7 +24,6 @@ optimizer.step()
 ---
 
 ## Class for buiding neural networks
-
 I've always built neural networks using the functionality provided by Pytorch, and this abstracts away the underlying complexities.
 Thereby making it easier for the programmer to build their applications.
 
@@ -40,6 +37,7 @@ Clone the repository:
    ```bash
    git clone https://github.com/R2D2-08/minilib.git
    cd minilib
+   ```
 
 ## References 
 
