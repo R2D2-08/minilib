@@ -25,7 +25,7 @@ class Value:
 
 		out = Value(self.data + other.data, (self, other), '+')
 
-		def backward():
+		def _backward():
 		
 			'''
 			out = a + b
@@ -42,7 +42,7 @@ class Value:
 			other.grad += 1.0 * out.grad
 
 		# Set and Make the call to the backward pass from the current node
-		out._backward = backward	
+		out._backward = _backward	
 		
 		return out
 		
@@ -53,7 +53,7 @@ class Value:
 		
 		out = Value(self.data * other.data, (self, other), '*')
 
-		def backward():
+		def _backward():
 		
 			'''
 			out = a * b
@@ -70,7 +70,7 @@ class Value:
 			other.grad += self.data * out.grad
 
 		# Set and Make the call to the backward pass from the current node
-		out._backward = backward	
+		out._backward = _backward	
 		
 		return out
 
@@ -81,7 +81,7 @@ class Value:
 
 		out = Value(self.data ** other, (self,), 'pow')	
 
-		def backward():
+		def _backward():
 
 			'''
 			out = a ** b
@@ -92,7 +92,7 @@ class Value:
 			'''
 			self.grad += out.grad * other * self.data ** (other - 1)
 
-		out._backward = backward
+		out._backward = _backward
 
 		return out
 	
@@ -103,7 +103,7 @@ class Value:
 		
 		out = Value(max(self.data, 0), (self, ), 'ReLU')
 
-		def backward():
+		def _backward():
 			
 			'''
 			out = max(a, 0)
@@ -115,7 +115,7 @@ class Value:
 
 			self.grad += out.grad * 1.0 if self.data > 0 else 0
 
-		out._backward = backward
+		out._backward = _backward
 
 		return out
 
@@ -128,7 +128,7 @@ class Value:
 		t = (math.exp(2*x) - 1) / (math.exp(2*x) + 1)
 		out = Value(t, (self, ), 'tanh')
 
-		def backward():
+		def _backward():
 			
 			'''
 			out = tanh(x)
@@ -139,9 +139,9 @@ class Value:
 		
 			'''
 	
-			self.grad = (1 - self.data**2) * out.grad
+			self.grad = (1 - t**2) * out.grad
 
-		self._backward = backward
+		out._backward = _backward
 
 		return out
 
@@ -195,23 +195,3 @@ class Value:
 	
 	def __rtruediv__(self, other):
 		return other * (self ** -1)
-	
-
-
-
-# Examples
-
-a = Value(2.0, label='a')
-b = Value(-3.0, label='b')
-c = Value(10.0, label='c')
-d = Value(5.0, label ='d')
-e = a * b
-e.label = 'e'
-f = c / d
-f.label = 'f'
-g = c * d + e
-g.label = 'g'
-h = f - g; h.label = 'h'
-
-h.backward()
-print(f"{a}\n{b}\n{c}\n{d}\n{e}\n{f}\n{g}\n{h}")
