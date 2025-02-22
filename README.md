@@ -7,7 +7,7 @@ Understanding it mathematically allows one to cleverly define implicit methods t
 The Auto-grad engine creates a computational graph at run-time. This graph is a directed acyclic graph and can be sorted topologically. 
 After generating this graph, the engine explores it backwards from the rightmost node with each node having the gradient set to the derivative with respect to the rightmost node.
 
-Using pytorch, the same can be done by the following code:
+Using Pytorch, the same can be done by the following code:
 
 ```python
 optimizer.zero_grad()
@@ -23,7 +23,7 @@ optimizer.step()
 
 ---
 
-## Objects for buiding neural networks
+## Objects for building neural networks
 I've always built neural networks using the functionality provided by Pytorch, and this abstracts away the underlying complexities, thereby making it easier for the programmer to build their applications.
 
 Building MLPs for any task is possible using the Linear class defined in 'arch.py'. The same goes for image processing using CNNs, this can be done using the Conv2D class defined in the same file. 
